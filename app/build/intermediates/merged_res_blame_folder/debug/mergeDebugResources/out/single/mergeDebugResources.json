@@ -1,0 +1,62 @@
+[
+    {
+        "merged": "C:\\Users\\guigu\\.gradle\\daemon\\8.9\\com.seuapp.pokescanner.app-debug-55:\\layout_fragment_card_detail.xml.flat",
+        "source": "C:\\Users\\guigu\\.gradle\\daemon\\8.9\\com.seuapp.pokescanner.app-main-57:\\layout\\fragment_card_detail.xml"
+    },
+    {
+        "merged": "C:\\Users\\guigu\\.gradle\\daemon\\8.9\\com.seuapp.pokescanner.app-debug-55:\\navigation_nav_graph.xml.flat",
+        "source": "C:\\Users\\guigu\\.gradle\\daemon\\8.9\\com.seuapp.pokescanner.app-main-57:\\navigation\\nav_graph.xml"
+    },
+    {
+        "merged": "C:\\Users\\guigu\\.gradle\\daemon\\8.9\\com.seuapp.pokescanner.app-debug-55:\\layout_item_card.xml.flat",
+        "source": "C:\\Users\\guigu\\.gradle\\daemon\\8.9\\com.seuapp.pokescanner.app-main-57:\\layout\\item_card.xml"
+    },
+    {
+        "merged": "C:\\Users\\guigu\\.gradle\\daemon\\8.9\\com.seuapp.pokescanner.app-debug-55:\\color_bottom_nav_selector.xml.flat",
+        "source": "C:\\Users\\guigu\\.gradle\\daemon\\8.9\\com.seuapp.pokescanner.app-main-57:\\color\\bottom_nav_selector.xml"
+    },
+    {
+        "merged": "C:\\Users\\guigu\\.gradle\\daemon\\8.9\\com.seuapp.pokescanner.app-debug-55:\\drawable_scanner_guide_frame.xml.flat",
+        "source": "C:\\Users\\guigu\\.gradle\\daemon\\8.9\\com.seuapp.pokescanner.app-main-57:\\drawable\\scanner_guide_frame.xml"
+    },
+    {
+        "merged": "C:\\Users\\guigu\\.gradle\\daemon\\8.9\\com.seuapp.pokescanner.app-debug-55:\\drawable_ic_collection.xml.flat",
+        "source": "C:\\Users\\guigu\\.gradle\\daemon\\8.9\\com.seuapp.pokescanner.app-main-57:\\drawable\\ic_collection.xml"
+    },
+    {
+        "merged": "C:\\Users\\guigu\\.gradle\\daemon\\8.9\\com.seuapp.pokescanner.app-debug-55:\\layout_activity_main.xml.flat",
+        "source": "C:\\Users\\guigu\\.gradle\\daemon\\8.9\\com.seuapp.pokescanner.app-main-57:\\layout\\activity_main.xml"
+    },
+    {
+        "merged": "C:\\Users\\guigu\\.gradle\\daemon\\8.9\\com.seuapp.pokescanner.app-debug-55:\\layout_fragment_scanner.xml.flat",
+        "source": "C:\\Users\\guigu\\.gradle\\daemon\\8.9\\com.seuapp.pokescanner.app-main-57:\\layout\\fragment_scanner.xml"
+    },
+    {
+        "merged": "C:\\Users\\guigu\\.gradle\\daemon\\8.9\\com.seuapp.pokescanner.app-debug-55:\\menu_bottom_nav_menu.xml.flat",
+        "source": "C:\\Users\\guigu\\.gradle\\daemon\\8.9\\com.seuapp.pokescanner.app-main-57:\\menu\\bottom_nav_menu.xml"
+    },
+    {
+        "merged": "C:\\Users\\guigu\\.gradle\\daemon\\8.9\\com.seuapp.pokescanner.app-debug-55:\\drawable_ic_scanner.xml.flat",
+        "source": "C:\\Users\\guigu\\.gradle\\daemon\\8.9\\com.seuapp.pokescanner.app-main-57:\\drawable\\ic_scanner.xml"
+    },
+    {
+        "merged": "C:\\Users\\guigu\\.gradle\\daemon\\8.9\\com.seuapp.pokescanner.app-debug-55:\\layout_fragment_collection.xml.flat",
+        "source": "C:\\Users\\guigu\\.gradle\\daemon\\8.9\\com.seuapp.pokescanner.app-main-57:\\layout\\fragment_collection.xml"
+    },
+    {
+        "merged": "com.seuapp.pokescanner.app-debug-55:/layout_fragment_scanner.xml.flat",
+        "source": "com.seuapp.pokescanner.app-main-57:/layout/fragment_scanner.xml"
+    },
+    {
+        "merged": "C:\\Users\\guigu\\.gradle\\daemon\\8.9\\com.seuapp.pokescanner.app-debug-55:\\drawable_pill_background.xml.flat",
+        "source": "C:\\Users\\guigu\\.gradle\\daemon\\8.9\\com.seuapp.pokescanner.app-main-57:\\drawable\\pill_background.xml"
+    },
+    {
+        "merged": "C:\\Users\\guigu\\.gradle\\daemon\\8.9\\com.seuapp.pokescanner.app-debug-55:\\layout_fragment_settings.xml.flat",
+        "source": "C:\\Users\\guigu\\.gradle\\daemon\\8.9\\com.seuapp.pokescanner.app-main-57:\\layout\\fragment_settings.xml"
+    },
+    {
+        "merged": "C:\\Users\\guigu\\.gradle\\daemon\\8.9\\com.seuapp.pokescanner.app-debug-55:\\drawable_ic_settings.xml.flat",
+        "source": "C:\\Users\\guigu\\.gradle\\daemon\\8.9\\com.seuapp.pokescanner.app-main-57:\\drawable\\ic_settings.xml"
+    }
+]

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/scanner_fragment">
+
+    <fragment
+        android:id="@+id/scanner_fragment"
+        android:name="com.seuapp.pokescanner.ui.scanner.ScannerFragment"
+        android:label="@string/nav_scanner"
+        tools:layout="@layout/fragment_scanner">
+        <action
+            android:id="@+id/action_scanner_fragment_to_card_detail_fragment"
+            app:destination="@id/card_detail_fragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/collection_fragment"
+        android:name="com.seuapp.pokescanner.ui.collection.CollectionFragment"
+        android:label="@string/nav_collection"
+        tools:layout="@layout/fragment_collection">
+        <action
+            android:id="@+id/action_collection_fragment_to_card_detail_fragment"
+            app:destination="@id/card_detail_fragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/card_detail_fragment"
+        android:name="com.seuapp.pokescanner.ui.detail.CardDetailFragment"
+        android:label="@string/card_detail_title"
+        tools:layout="@layout/fragment_card_detail">
+        <argument
+            android:name="cardId"
+            app:argType="string" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/settings_fragment"
+        android:name="com.seuapp.pokescanner.ui.settings.SettingsFragment"
+        android:label="@string/settings_title"
+        tools:layout="@layout/fragment_settings" />
+
+</navigation>
+

@@ -1,0 +1,19 @@
+{
+    "logs": [
+        {
+            "outputFile": "com.seuapp.pokescanner.app-mergeDebugResources-53:/values-h720dp-v13/values-h720dp-v13.xml",
+            "map": [
+                {
+                    "source": "C:\\Users\\guigu\\.gradle\\caches\\8.9\\transforms\\17192660ed8100b2441c9ed3e2d2583b\\transformed\\appcompat-1.6.1\\res\\values-h720dp-v13\\values-h720dp-v13.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "66",
+                        "endOffsets": "117"
+                    }
+                }
+            ]
+        }
+    ]
+}

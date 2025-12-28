@@ -1,0 +1,26 @@
+[
+    {
+        "merged": "com.seuapp.pokescanner.app-mergeDebugResources-54:/layout/item_card.xml",
+        "source": "com.seuapp.pokescanner.app-main-57:/layout/item_card.xml"
+    },
+    {
+        "merged": "com.seuapp.pokescanner.app-mergeDebugResources-54:/layout/fragment_collection.xml",
+        "source": "com.seuapp.pokescanner.app-main-57:/layout/fragment_collection.xml"
+    },
+    {
+        "merged": "com.seuapp.pokescanner.app-mergeDebugResources-54:/layout/fragment_scanner.xml",
+        "source": "com.seuapp.pokescanner.app-main-57:/layout/fragment_scanner.xml"
+    },
+    {
+        "merged": "com.seuapp.pokescanner.app-mergeDebugResources-54:/layout/fragment_settings.xml",
+        "source": "com.seuapp.pokescanner.app-main-57:/layout/fragment_settings.xml"
+    },
+    {
+        "merged": "com.seuapp.pokescanner.app-mergeDebugResources-54:/layout/activity_main.xml",
+        "source": "com.seuapp.pokescanner.app-main-57:/layout/activity_main.xml"
+    },
+    {
+        "merged": "com.seuapp.pokescanner.app-mergeDebugResources-54:/layout/fragment_card_detail.xml",
+        "source": "com.seuapp.pokescanner.app-main-57:/layout/fragment_card_detail.xml"
+    }
+]

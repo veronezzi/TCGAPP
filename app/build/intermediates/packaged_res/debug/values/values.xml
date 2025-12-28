@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#000000</color>
+    <color name="blue_500">#2196F3</color>
+    <color name="dark_background">#121212</color>
+    <color name="dark_surface">#1E1E1E</color>
+    <color name="dark_surface_variant">#2C2C2C</color>
+    <color name="gray_400">#B0B0B0</color>
+    <color name="green_200">#A5D6A7</color>
+    <color name="green_500">#4CAF50</color>
+    <color name="green_900">#1B5E20</color>
+    <color name="purple_500">#9C27B0</color>
+    <color name="red_500">#F44336</color>
+    <color name="white">#FFFFFF</color>
+    <string name="app_name">Pokemon Card Scanner</string>
+    <string name="button_add_to_collection">Adicionar à Coleção</string>
+    <string name="button_remove_from_collection">Remover da Coleção</string>
+    <string name="button_scan">Escanear</string>
+    <string name="button_scanning">Processando...</string>
+    <string name="card_detail_title">Detalhes da Carta</string>
+    <string name="card_number">Nº: %1$s</string>
+    <string name="card_price">Preço: %1$s</string>
+    <string name="card_set">Set: %1$s</string>
+    <string name="collection_empty">Nenhuma carta na coleção</string>
+    <string name="collection_title">Minha Coleção</string>
+    <string name="collection_total_value">Valor Total: %1$s</string>
+    <string name="error_camera_permission">Permissão de câmera necessária</string>
+    <string name="error_card_not_found">Carta não encontrada</string>
+    <string name="error_network">Erro de conexão</string>
+    <string name="error_scan_failed">Erro ao escanear carta</string>
+    <string name="nav_collection">Coleção</string>
+    <string name="nav_scanner">Scanner</string>
+    <string name="nav_settings">Configurações</string>
+    <string name="scanner_instruction">Posicione a carta no frame e toque para escanear</string>
+    <string name="scanner_title">Escanear Carta</string>
+    <string name="settings_title">Configurações</string>
+    <style name="Theme.PokeScanner" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/green_500</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorPrimaryContainer">@color/green_200</item>
+        <item name="colorOnPrimaryContainer">@color/green_900</item>
+        <item name="colorSecondary">@color/blue_500</item>
+        <item name="colorOnSecondary">@color/white</item>
+        <item name="colorTertiary">@color/purple_500</item>
+        <item name="colorOnTertiary">@color/white</item>
+        <item name="colorError">@color/red_500</item>
+        <item name="colorOnError">@color/white</item>
+        <item name="colorSurface">@color/dark_surface</item>
+        <item name="colorOnSurface">@color/white</item>
+        <item name="colorSurfaceVariant">@color/dark_surface_variant</item>
+        <item name="colorOnSurfaceVariant">@color/gray_400</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+    </style>
+</resources>
