@@ -5,6 +5,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -85,10 +86,11 @@ class ScannerFragment : Fragment() {
             viewModel.clearError()
         }
         
-        // Quando detecta número, mostra diálogo de confirmação
-        state.detectedCardNumber?.let { cardNumber ->
-            showCardNumberDetectedDialog(cardNumber)
+        // Quando detecta informações da carta, mostra diálogo de confirmação (apenas uma vez)
+        state.detectedCardNumber?.let { cardInfo ->
+            // Limpa o estado ANTES de mostrar o diálogo para evitar que apareça duas vezes
             viewModel.clearDetectedCardNumber()
+            showCardNumberDetectedDialog(cardInfo)
         }
         
         state.scannedCard?.let { card ->
@@ -97,28 +99,35 @@ class ScannerFragment : Fragment() {
         }
     }
     
-    private fun showCardNumberDetectedDialog(cardNumber: String) {
+    private fun showCardNumberDetectedDialog(cardInfo: String) {
         MaterialAlertDialogBuilder(requireContext())
             .setTitle("Carta Detectada")
-            .setMessage("Carta $cardNumber detectada. Gostaria de pesquisar?")
+            .setMessage("$cardInfo detectada. Gostaria de pesquisar?")
             .setPositiveButton("Sim") { _, _ ->
-                showSearchOptionsDialog(cardNumber)
+                // Usa o número apenas para a URL (se disponível)
+                val state = viewModel.uiState.value
+                val numberForSearch = state.detectedCardNumberOnly ?: state.detectedCardNumber ?: cardInfo
+                showSearchOptionsDialog(numberForSearch, state.detectedCardName)
             }
             .setNegativeButton("Não", null)
             .show()
     }
     
-    private fun showSearchOptionsDialog(cardNumber: String) {
+    private fun showSearchOptionsDialog(cardNumber: String, cardName: String?) {
+        val message = if (cardName != null) {
+            "Pesquisar $cardName ($cardNumber)?"
+        } else {
+            "Pesquisar carta $cardNumber?"
+        }
+        
         MaterialAlertDialogBuilder(requireContext())
             .setTitle("Onde pesquisar?")
-            .setItems(arrayOf("Liga Pokemon", "Outra opção (em breve)")) { _, which ->
-                when (which) {
-                    0 -> openLigaPokemon(cardNumber)
-                    1 -> {
-                        // Não faz nada por enquanto
-                        Toast.makeText(context, "Funcionalidade em breve", Toast.LENGTH_SHORT).show()
-                    }
-                }
+            .setMessage(message)
+            .setPositiveButton("Liga Pokemon") { _, _ ->
+                openLigaPokemon(cardNumber)
+            }
+            .setNeutralButton("Outra opção (em breve)") { _, _ ->
+                Toast.makeText(context, "Funcionalidade em breve", Toast.LENGTH_SHORT).show()
             }
             .setNegativeButton("Cancelar", null)
             .show()
@@ -126,10 +135,23 @@ class ScannerFragment : Fragment() {
     
     private fun openLigaPokemon(cardNumber: String) {
         try {
-            // Formata o número para a URL (substitui / por %2F)
-            val encodedNumber = cardNumber.replace("/", "%2F")
-            val url = "https://www.ligapokemon.com.br/?view=cards%2Fsearch&tipo=1&card=$encodedNumber"
+            // Pega o estado atual para verificar se tem nome
+            val state = viewModel.uiState.value
+            val cardName = state.detectedCardName?.lowercase()?.replace(" ", "+")
             
+            // Monta a URL com nome + número se disponível, senão só número
+            val url = if (cardName != null && cardName.isNotBlank()) {
+                // Formata número (substitui / por %2F)
+                val encodedNumber = cardNumber.replace("/", "%2F")
+                // URL com nome + número: artazon+076%2F091
+                "https://www.ligapokemon.com.br/?view=cards%2Fsearch&tipo=1&card=$cardName+$encodedNumber"
+            } else {
+                // Apenas número se não tiver nome
+                val encodedNumber = cardNumber.replace("/", "%2F")
+                "https://www.ligapokemon.com.br/?view=cards%2Fsearch&tipo=1&card=$encodedNumber"
+            }
+            
+            Log.d("ScannerFragment", "Abrindo Liga Pokemon: $url")
             val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
             startActivity(intent)
         } catch (e: Exception) {

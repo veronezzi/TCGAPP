@@ -5,10 +5,10 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.seuapp.pokescanner.core.camera.CameraXProvider
-import com.seuapp.pokescanner.core.crop.CardBottomLeftCropper
+import com.seuapp.pokescanner.core.crop.CardCropper
 import com.seuapp.pokescanner.core.image.BitmapRotator
 import com.seuapp.pokescanner.core.image.ImagePreprocessor
-import com.seuapp.pokescanner.core.ocr.CardNumberOcr
+import com.seuapp.pokescanner.core.ocr.CardInfoOcr
 import com.seuapp.pokescanner.data.repository.PokemonCardRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -33,9 +33,9 @@ class ScannerViewModel @Inject constructor(
 
     private var cameraProvider: CameraXProvider? = null
     private val cameraExecutor = Executors.newSingleThreadExecutor()
-    private val cropper = CardBottomLeftCropper()
+    private val cardCropper = CardCropper()
     private val imagePreprocessor = ImagePreprocessor()
-    private val ocr = CardNumberOcr()
+    private val cardInfoOcr = CardInfoOcr()
 
     fun initializeCamera(previewView: PreviewView, lifecycleOwner: LifecycleOwner) {
         viewModelScope.launch {
@@ -58,6 +58,8 @@ class ScannerViewModel @Inject constructor(
                 isLoading = true,
                 error = null,
                 detectedCardNumber = null,
+                detectedCardName = null,
+                detectedCardNumberOnly = null,
                 scannedCard = null
             )
 
@@ -77,26 +79,43 @@ class ScannerViewModel @Inject constructor(
                 // Rotaciona a imagem se necessário (CameraX pode retornar rotacionada)
                 val rotatedBitmap = BitmapRotator.rotateForPortrait(bitmap)
                 
-                // Crop da região inferior esquerda onde fica o número
-                val croppedBitmap = cropper.cropBottomLeftRegion(rotatedBitmap)
+                // Crop da carta (por enquanto retorna a imagem inteira)
+                val cardBitmap = cardCropper.cropCard(rotatedBitmap)
                 
                 // Pré-processa a imagem para melhorar o OCR
-                val enhancedBitmap = imagePreprocessor.enhanceForOcr(croppedBitmap)
-                val cardNumber = ocr.extractCardNumber(enhancedBitmap)
+                val enhancedBitmap = imagePreprocessor.enhanceForOcr(cardBitmap)
+                
+                // Extrai nome e número da carta
+                val cardInfo = cardInfoOcr.extractCardInfo(enhancedBitmap)
 
-                if (cardNumber == null) {
+                if (cardInfo == null || (cardInfo.name == null && cardInfo.number == null)) {
                     _uiState.value = _uiState.value.copy(
                         isLoading = false,
-                        error = "Número da carta não detectado. Tente novamente."
+                        error = "Informações da carta não detectadas. Tente novamente."
                     )
                     return@launch
                 }
 
-                // Apenas detecta o número, não faz request automática
+                // Cria string formatada com nome e número
+                val cardInfoText = buildString {
+                    if (cardInfo.name != null) {
+                        append(cardInfo.name)
+                        if (cardInfo.number != null) {
+                            append(" ")
+                        }
+                    }
+                    if (cardInfo.number != null) {
+                        append(cardInfo.number)
+                    }
+                }
+
+                // Armazena informações detectadas
                 _uiState.value = _uiState.value.copy(
                     isLoading = false,
                     error = null,
-                    detectedCardNumber = cardNumber
+                    detectedCardNumber = cardInfoText,
+                    detectedCardName = cardInfo.name,
+                    detectedCardNumberOnly = cardInfo.number
                 )
             } catch (e: Exception) {
                 _uiState.value = _uiState.value.copy(
@@ -121,7 +140,7 @@ class ScannerViewModel @Inject constructor(
 
     fun releaseCamera() {
         cameraProvider?.release()
-        ocr.release()
+        cardInfoOcr.release()
         cameraExecutor.shutdown()
     }
 }
