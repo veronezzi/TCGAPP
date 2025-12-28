@@ -16,31 +16,8 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f9dce5a3-4a66-4e6c-bccd-5243d27790ee" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/BUILD_INSTRUCTIONS.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/CORRECAO_CAMERA_LAYOUT.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/CORRECAO_GRADLE_SYNC.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/CORRECAO_JAVA_HOME.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/CORRECAO_JLINK_ERROR.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/CORRECAO_KAPT_ERROR.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/CORRECAO_ROTACAO_CROP.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/CORRECAO_R_CLASS.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/CORRECAO_SDK_JLINK.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ERRO_RESOURCE_LINKING.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ESTRUTURA_PROJETO.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/IMPLEMENTACAO_COMPLETA.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/IMPLEMENTACAO_INICIAL.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/IMPLEMENTACAO_MELHORADA.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/IMPLEMENTAR_APP.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/INSTRUCOES_FINAIS_BUILD.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/MELHORIAS_FINAIS.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/MELHORIAS_IDENTIFICACAO_CARTA.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/PLANO_IMPLEMENTACAO.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/RESUMO_FINAL.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/RESUMO_IMPLEMENTACAO.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/SOLUCAO_JLINK.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/SOLUCAO_KAPT.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/seuapp/pokescanner/data/repository/PokemonCardRepository.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/seuapp/pokescanner/data/repository/PokemonCardRepository.kt" afterDir="false" />
+    <list default="true" id="f9dce5a3-4a66-4e6c-bccd-5243d27790ee" name="Changes" comment="pr template added">
+      <changelist_data name="gveronezzi" email="" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -74,12 +51,18 @@
     </system>
   </component>
   <component name="Git.Settings">
+    <option name="PREVIOUS_COMMIT_AUTHORS">
+      <list>
+        <option value="gveronezzi" />
+      </list>
+    </option>
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
         <entry key="$PROJECT_DIR$" value="main" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="SIGN_OFF_COMMIT" value="true" />
   </component>
   <component name="GitHubPullRequestSearchHistory"><![CDATA[{
   "lastFilter": {
@@ -197,7 +180,29 @@
       <option name="presentableId" value="Default" />
       <updated>1766879999019</updated>
     </task>
+    <task id="LOCAL-00001" summary="code adjustments and README.md edited">
+      <option name="closed" value="true" />
+      <created>1766885760237</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1766885760237</updated>
+    </task>
+    <task id="LOCAL-00002" summary="pr template added">
+      <option name="closed" value="true" />
+      <created>1766885924447</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1766885924447</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="code adjustments and README.md edited" />
+    <MESSAGE value="pr template added" />
+    <option name="LAST_COMMIT_MESSAGE" value="pr template added" />
   </component>
   <component name="play_dynamic_filters_status">
     <option name="appIdToCheckInfo">
