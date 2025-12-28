@@ -17,7 +17,6 @@ class PokemonCardRepository @Inject constructor(
 ) {
     companion object {
         private const val TAG = "PokemonCardRepository"
-        private const val API_BASE_URL = "https://api.pokemontcg.io/v2/"
     }
 
     /**
@@ -127,18 +126,6 @@ class PokemonCardRepository @Inject constructor(
                 null
             }
         }
-    }
-
-    private fun normalizeNumberForSearch(cardNumber: String): String {
-        if (cardNumber.contains("/")) {
-            val parts = cardNumber.split("/")
-            if (parts.size == 2) {
-                val number = parts[0].trim().toIntOrNull()?.toString() ?: parts[0].trim()
-                val total = parts[1].trim()
-                return "$number/$total"
-            }
-        }
-        return cardNumber.trim().toIntOrNull()?.toString() ?: cardNumber.trim()
     }
 
     private fun mapDtoToDomain(dto: com.seuapp.pokescanner.data.remote.dto.CardDto): PokemonCard {

@@ -17,7 +17,30 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f9dce5a3-4a66-4e6c-bccd-5243d27790ee" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BUILD_INSTRUCTIONS.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CORRECAO_CAMERA_LAYOUT.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CORRECAO_GRADLE_SYNC.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CORRECAO_JAVA_HOME.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CORRECAO_JLINK_ERROR.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CORRECAO_KAPT_ERROR.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CORRECAO_ROTACAO_CROP.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CORRECAO_R_CLASS.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CORRECAO_SDK_JLINK.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ERRO_RESOURCE_LINKING.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ESTRUTURA_PROJETO.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/IMPLEMENTACAO_COMPLETA.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/IMPLEMENTACAO_INICIAL.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/IMPLEMENTACAO_MELHORADA.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/IMPLEMENTAR_APP.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/INSTRUCOES_FINAIS_BUILD.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MELHORIAS_FINAIS.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MELHORIAS_IDENTIFICACAO_CARTA.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PLANO_IMPLEMENTACAO.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RESUMO_FINAL.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RESUMO_IMPLEMENTACAO.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/SOLUCAO_JLINK.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/SOLUCAO_KAPT.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/seuapp/pokescanner/data/repository/PokemonCardRepository.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/seuapp/pokescanner/data/repository/PokemonCardRepository.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -51,6 +74,11 @@
     </system>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="main" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="GitHubPullRequestSearchHistory"><![CDATA[{
@@ -67,18 +95,18 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Android App.app.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.readMode.enableVisualFormatting&quot;: &quot;true&quot;,
-    &quot;cf.first.check.clang-format&quot;: &quot;false&quot;,
-    &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settingsdialog.project.gradle&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Android App.app.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.cidr.known.project.marker": "true",
+    "RunOnceActivity.readMode.enableVisualFormatting": "true",
+    "cf.first.check.clang-format": "false",
+    "cidr.known.project.marker": "true",
+    "git-widget-placeholder": "fix/cleanup-at-main-branch",
+    "settings.editor.selected.configurable": "reference.settingsdialog.project.gradle"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\guigu\Documents\Android\TCGAPP\app" />
