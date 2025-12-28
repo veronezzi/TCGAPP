@@ -179,6 +179,7 @@ class CardInfoOcr {
         val cardTypeKeywords = listOf(
             "estádio", "estadio", "stadium",
             "treinador", "trainer", 
+            "apoiador", "supporter", // Tipo de carta Treinador-Apoiador
             "pokémon", "pokemon",
             "basic", "básico", "básico", "bậsico", "basico", // Variações de OCR
             "stage", "estágio", "estagio",

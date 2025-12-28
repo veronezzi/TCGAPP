@@ -86,11 +86,11 @@ class ScannerFragment : Fragment() {
             viewModel.clearError()
         }
         
-        // Quando detecta informações da carta, mostra diálogo de confirmação
-        if (state.detectedCardNumber != null || state.detectedCardName != null || state.detectedCardNumberOnly != null) {
-            val displayText = state.detectedCardNumber ?: (state.detectedCardName ?: "") + " " + (state.detectedCardNumberOnly ?: "")
-            showCardNumberDetectedDialog(displayText.trim())
+        // Quando detecta informações da carta, mostra diálogo de confirmação (apenas uma vez)
+        state.detectedCardNumber?.let { cardInfo ->
+            // Limpa o estado ANTES de mostrar o diálogo para evitar que apareça duas vezes
             viewModel.clearDetectedCardNumber()
+            showCardNumberDetectedDialog(cardInfo)
         }
         
         state.scannedCard?.let { card ->
