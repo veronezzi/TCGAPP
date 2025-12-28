@@ -62,10 +62,11 @@ class CardInfoOcr {
             
             Log.d(TAG, "Texto OCR extraído (raw): $fullText")
             
-            // Extrai número
+            // Extrai número primeiro (formato XXX/XXX)
             val number = extractCardNumber(fullText)
+            Log.d(TAG, "Número detectado pelo extractCardNumber: $number")
             
-            // Extrai nome (primeira linha significativa que não é número)
+            // Extrai nome (focando em linhas mais abaixo, ignorando texto superior)
             val name = extractCardName(fullText, number)
             
             if (name != null || number != null) {
@@ -82,28 +83,74 @@ class CardInfoOcr {
 
     /**
      * Extrai o número da carta do texto OCR.
+     * Prioriza formato "XXX/XXX" (número da carta) e ignora "N° XXX" (número do Pokédex).
      */
     private fun extractCardNumber(text: String): String? {
-        // Primeiro limpa e corrige erros comuns
-        val cleaned = cleanTextForNumber(text)
+        // Primeiro corrige "o" para "0" em contexto numérico (ex: "o52" -> "052")
+        var cleaned = cleanTextForNumber(text)
         
-        // Tenta encontrar padrão número/total primeiro
-        val fullMatch = CARD_NUMBER_REGEX.find(cleaned)
-        if (fullMatch != null) {
-            val number = fullMatch.groupValues[1]
-            val total = fullMatch.groupValues.getOrNull(2)
+        // Procura TODOS os padrões de número/total no texto (formato XXX/XXX)
+        val cardNumberPattern = Regex("""(\d{1,3})\s*[/\\]\s*(\d{1,3})""")
+        val allMatches = cardNumberPattern.findAll(cleaned).toList()
+        
+        if (allMatches.isEmpty()) {
+            // Se não encontrou formato XXX/XXX, retorna null (não tenta pegar número solto)
+            return null
+        }
+        
+        Log.d(TAG, "Encontrados ${allMatches.size} padrões de número/total no texto")
+        
+        // Prioriza padrões que estão no final do texto (onde geralmente está o número da carta)
+        // e ignora padrões que estão no início (geralmente são número do Pokédex)
+        val textLength = cleaned.length
+        
+        // Procura o padrão mais próximo do final do texto e que tem formato completo (XXX/XXX)
+        var bestMatch: MatchResult? = null
+        var bestPosition = -1
+        
+        for (match in allMatches) {
+            val matchPosition = match.range.first
+            val matchText = match.value
             
-            if (total != null && total.isNotBlank()) {
-                return "$number/$total"
-            } else {
-                return number
+            // Ignora padrões que estão logo após "N°" ou "Nº" (são número do Pokédex)
+            val beforeMatch = cleaned.substring(0, matchPosition.coerceAtMost(cleaned.length))
+            val hasPokedexPrefix = Regex("""[Nn°º]\s*\d+\s*$""").find(beforeMatch) != null
+            
+            if (hasPokedexPrefix) {
+                Log.d(TAG, "Ignorando padrão (tem prefixo Pokédex): $matchText na posição $matchPosition")
+                continue
+            }
+            
+            // Prefere padrões que estão nos últimos 50% do texto (onde está o número da carta)
+            val isNearEnd = matchPosition > (textLength * 0.5)
+            
+            // Prioriza padrões que estão mais próximos do final
+            if (bestMatch == null || matchPosition > bestPosition) {
+                bestMatch = match
+                bestPosition = matchPosition
+                Log.d(TAG, "Candidato encontrado: $matchText na posição $matchPosition (próximo do final: $isNearEnd)")
             }
         }
         
-        // Se não encontrou, tenta encontrar qualquer sequência de números
-        val numberOnlyRegex = Regex("""\d{1,3}""")
-        val numberMatch = numberOnlyRegex.find(cleaned)
-        return numberMatch?.value
+        // Se não encontrou um bom match, pega o último (mais provável de ser o número da carta)
+        val finalMatch = bestMatch ?: allMatches.lastOrNull()
+        
+        if (finalMatch != null) {
+            val number = finalMatch.groupValues[1]
+            val total = finalMatch.groupValues.getOrNull(2)
+            
+            // Só retorna se tiver o formato completo XXX/XXX
+            if (total != null && total.isNotBlank()) {
+                // Garante que número tem 3 dígitos (052 ao invés de 52)
+                val formattedNumber = number.padStart(3, '0')
+                val result = "$formattedNumber/$total"
+                Log.d(TAG, "✅ Número da carta extraído: $result (posição: ${finalMatch.range}, texto: '${finalMatch.value}')")
+                return result
+            }
+        }
+        
+        Log.w(TAG, "Nenhum padrão válido de número/total encontrado")
+        return null
     }
 
     /**
@@ -128,11 +175,12 @@ class CardInfoOcr {
             }
         
         // Palavras-chave que indicam tipo de carta (devem ser ignoradas)
+        // Inclui variações com erros de OCR comuns
         val cardTypeKeywords = listOf(
             "estádio", "estadio", "stadium",
             "treinador", "trainer", 
             "pokémon", "pokemon",
-            "basic", "básico", "básico",
+            "basic", "básico", "básico", "bậsico", "basico", // Variações de OCR
             "stage", "estágio", "estagio",
             "evolution", "evolução", "evolucao",
             "gx", "ex", "v", "vmax", "vstar", "v-union"
@@ -146,8 +194,8 @@ class CardInfoOcr {
             "jogador", "baralho", "banco", "campo"
         )
         
-        // Procura nas primeiras 5-8 linhas (onde geralmente está o nome)
-        val searchRange = (0 until lines.size.coerceAtMost(8))
+        // Procura nas primeiras 6-10 linhas (onde geralmente está o nome)
+        val searchRange = (0 until lines.size.coerceAtMost(10))
         
         for (i in searchRange) {
             val line = lines[i]
@@ -163,10 +211,18 @@ class CardInfoOcr {
                 continue
             }
             
-            // Pula linhas que são tipo de carta (ex: "Estádio", "TREINADOR")
-            if (cardTypeKeywords.any { keyword -> 
-                lowerLine == keyword || lowerLine.startsWith(keyword + " ") || lowerLine == keyword.uppercase()
-            }) {
+            // Pula linhas que são tipo de carta (ex: "Estádio", "BÁSICO", "TREINADOR")
+            // Verifica se a linha inteira ou começo da linha é um tipo de carta
+            val isCardType = cardTypeKeywords.any { keyword -> 
+                val keywordLower = keyword.lowercase()
+                lowerLine == keywordLower || 
+                lowerLine.startsWith(keywordLower + " ") || 
+                lowerLine == keyword.uppercase() ||
+                // Também verifica se começa com a palavra (pode ter erro de OCR)
+                (lowerLine.length >= keywordLower.length && 
+                 lowerLine.substring(0, keywordLower.length.coerceAtMost(lowerLine.length)).contains(keywordLower))
+            }
+            if (isCardType) {
                 Log.d(TAG, "Ignorando linha (tipo de carta): $line")
                 continue
             }
@@ -183,11 +239,24 @@ class CardInfoOcr {
             }
             
             // Se a linha anterior era um tipo de carta, esta provavelmente é o nome!
-            // Ou se está nas primeiras linhas e não contém palavras-chave, pode ser o nome
-            val isAfterCardType = i > 0 && cardTypeKeywords.any { keyword ->
-                lines[i - 1].lowercase().let { prevLine ->
-                    prevLine == keyword || prevLine.startsWith(keyword + " ") || prevLine == keyword.uppercase()
+            // Normaliza a linha anterior para comparar (remove acentos de OCR)
+            val isAfterCardType = if (i > 0) {
+                val prevLine = lines[i - 1].lowercase()
+                    .replace("ậ", "a").replace("á", "a").replace("à", "a").replace("â", "a").replace("ã", "a")
+                    .replace("é", "e").replace("è", "e").replace("ê", "e")
+                    .replace("í", "i").replace("ì", "i").replace("î", "i")
+                    .replace("ó", "o").replace("ò", "o").replace("ô", "o").replace("õ", "o")
+                    .replace("ú", "u").replace("ù", "u").replace("û", "u")
+                
+                cardTypeKeywords.any { keyword ->
+                    val keywordLower = keyword.lowercase()
+                    prevLine == keywordLower || 
+                    prevLine.startsWith(keywordLower + " ") || 
+                    prevLine == keyword.uppercase() ||
+                    (prevLine.contains(keywordLower) && prevLine.length <= keywordLower.length + 2)
                 }
+            } else {
+                false
             }
             
             // Para nomes (geralmente curtos), pega a linha completa, não corta
@@ -271,14 +340,19 @@ class CardInfoOcr {
 
     /**
      * Limpa texto para extração de número.
+     * Corrige erros comuns de OCR, especialmente "o" -> "0".
      */
     private fun cleanTextForNumber(text: String): String {
-        // Corrige erros comuns de OCR
+        // Corrige erros comuns de OCR, especialmente "o" -> "0"
         var cleaned = text
-            // Corrige "o" (letra O) para "0" (zero) quando está em contexto numérico
-            .replace(Regex("""(\d|^|\s)[oO](\d)"""), "$10$2")  // o76 -> 076
-            .replace(Regex("""(\d)[oO](\d|/|\s|$)"""), "$10$2")  // 7o -> 70
-            .replace(Regex("""(\d)[O](\d)"""), "$10$2")
+            // Prioridade: Corrige padrão completo "o52/132" -> "052/132"
+            .replace(Regex("""\b[oO](\d{1,3})\s*[/\\]\s*(\d{1,3})\b"""), "0$1/$2")  // o52/132 -> 052/132
+            // Corrige "o" no início de número seguido de barra ou espaço
+            .replace(Regex("""(\s|^|[A-Z])[oO](\d{1,3})(\s|/|$)"""), "$10$2$3")  // o52 -> 052, MEGPI o52 -> MEGPI 052
+            // Corrige "o" entre dígitos
+            .replace(Regex("""(\d)[oO](\d)"""), "$10$2")  // 5o2 -> 502
+            // Corrige "o" antes de barra
+            .replace(Regex("""(\d|/)[oO](\d)"""), "$10$2")  // /o52 -> /052
         
         return cleaned
             .replace("\\s+".toRegex(), " ")
