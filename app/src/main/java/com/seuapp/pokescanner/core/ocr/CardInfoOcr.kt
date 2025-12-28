@@ -181,7 +181,7 @@ class CardInfoOcr {
             "treinador", "trainer", 
             "apoiador", "supporter", // Tipo de carta Treinador-Apoiador
             "pokémon", "pokemon",
-            "basic", "básico", "básico", "bậsico", "basico", // Variações de OCR
+            "basic", "básico", "bậsico", "basico", // Variações de OCR (basic, básico, básico com erro)
             "stage", "estágio", "estagio",
             "evolution", "evolução", "evolucao",
             "gx", "ex", "v", "vmax", "vstar", "v-union"
@@ -212,19 +212,35 @@ class CardInfoOcr {
                 continue
             }
             
-            // Pula linhas que são tipo de carta (ex: "Estádio", "BÁSICO", "TREINADOR")
-            // Verifica se a linha inteira ou começo da linha é um tipo de carta
+            // Pula linhas que são tipo de carta (ex: "Estádio", "BÁSICO", "TREINADOR", "BASIC")
+            // Normaliza a linha para remover acentos e permitir comparação mais robusta
+            val normalizedLine = lowerLine
+                .replace("ậ", "a").replace("á", "a").replace("à", "a").replace("â", "a").replace("ã", "a")
+                .replace("é", "e").replace("è", "e").replace("ê", "e")
+                .replace("í", "i").replace("ì", "i").replace("î", "i")
+                .replace("ó", "o").replace("ò", "o").replace("ô", "o").replace("õ", "o")
+                .replace("ú", "u").replace("ù", "u").replace("û", "u")
+                .trim()
+            
             val isCardType = cardTypeKeywords.any { keyword -> 
                 val keywordLower = keyword.lowercase()
-                lowerLine == keywordLower || 
-                lowerLine.startsWith(keywordLower + " ") || 
-                lowerLine == keyword.uppercase() ||
-                // Também verifica se começa com a palavra (pode ter erro de OCR)
-                (lowerLine.length >= keywordLower.length && 
-                 lowerLine.substring(0, keywordLower.length.coerceAtMost(lowerLine.length)).contains(keywordLower))
+                val normalizedKeyword = keywordLower
+                    .replace("ậ", "a").replace("á", "a").replace("à", "a").replace("â", "a").replace("ã", "a")
+                    .replace("é", "e").replace("è", "e").replace("ê", "e")
+                    .replace("í", "i").replace("ì", "i").replace("î", "i")
+                    .replace("ó", "o").replace("ò", "o").replace("ô", "o").replace("õ", "o")
+                    .replace("ú", "u").replace("ù", "u").replace("û", "u")
+                
+                // Verifica múltiplas condições para garantir que ignore corretamente
+                normalizedLine == normalizedKeyword ||  // Exatamente igual (normalizado)
+                normalizedLine == normalizedKeyword.uppercase() ||  // Tudo maiúsculo (normalizado)
+                normalizedLine.startsWith(normalizedKeyword + " ") ||  // Começa com a palavra
+                normalizedLine.startsWith(normalizedKeyword.uppercase() + " ") ||  // Começa maiúsculo
+                // Verifica se a linha contém apenas a palavra-chave (permite pequenas variações de OCR)
+                (normalizedLine.contains(normalizedKeyword) && normalizedLine.length <= normalizedKeyword.length + 3)
             }
             if (isCardType) {
-                Log.d(TAG, "Ignorando linha (tipo de carta): $line")
+                Log.d(TAG, "Ignorando linha (tipo de carta): $line -> normalizado: $normalizedLine")
                 continue
             }
             
@@ -251,10 +267,12 @@ class CardInfoOcr {
                 
                 cardTypeKeywords.any { keyword ->
                     val keywordLower = keyword.lowercase()
+                    // Verifica se a linha anterior é exatamente o tipo de carta
                     prevLine == keywordLower || 
                     prevLine.startsWith(keywordLower + " ") || 
                     prevLine == keyword.uppercase() ||
-                    (prevLine.contains(keywordLower) && prevLine.length <= keywordLower.length + 2)
+                    // Verifica se contém a palavra-chave e tem tamanho similar (evita falsos positivos)
+                    (prevLine.contains(keywordLower) && prevLine.length <= keywordLower.length + 3)
                 }
             } else {
                 false
